@@ -5,14 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Toyota Sequoia Pumpkin Packing Challenge</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@600;700&display=swap');
+
     :root {
-      --bg-dark: #121619;
-      --card-bg: rgba(26, 32, 38, 0.85);
-      --accent-orange: #f26522;
-      --accent-gold: #ffb400;
-      --text-light: #f1f5f9;
-      --toyota-red: #eb0a1e;
-      --border-color: rgba(255, 255, 255, 0.15);
+      --sky-top: #fde047;
+      --sky-bottom: #f97316;
+      --sequoia-red: #dc2626;
+      --sequoia-dark: #991b1b;
+      --trunk-interior: #262626;
+      --pumpkin-orange: #ff7700;
+      --wood-brown: #854d0e;
+      --card-bg: rgba(255, 255, 255, 0.92);
     }
 
     * {
@@ -24,158 +27,229 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: var(--bg-dark);
-      color: var(--text-light);
-      overflow: hidden;
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(180deg, #fdba74 0%, #ea580c 60%, #9a3412 100%);
+      color: #1e293b;
       height: 100vh;
       width: 100vw;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
     }
 
-    /* Top Bar Header */
+    /* Top Bar */
     header {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 10px 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px 20px;
-      background: rgba(18, 22, 25, 0.95);
-      border-bottom: 1px solid var(--border-color);
-      z-index: 10;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      z-index: 20;
     }
 
-    .brand {
+    .logo {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.6rem;
+      color: #ea580c;
       display: flex;
       align-items: center;
-      gap: 12px;
-      font-weight: 700;
-      font-size: 1.1rem;
-      letter-spacing: 0.5px;
-    }
-
-    .brand span.badge {
-      background: var(--toyota-red);
-      color: #fff;
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .game-stats {
-      display: flex;
-      gap: 20px;
-      align-items: center;
-    }
-
-    .stat-box {
-      background: var(--card-bg);
-      padding: 6px 14px;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .stat-value {
-      font-weight: 800;
-      color: var(--accent-gold);
-      font-size: 1.1rem;
-    }
-
-    /* Game Layout */
-    #game-container {
-      position: relative;
-      flex: 1;
-      width: 100%;
-      height: 100%;
-    }
-
-    #canvas-container {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
-
-    /* Controls Overlay */
-    .ui-overlay {
-      position: absolute;
-      pointer-events: none;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 20px;
-      z-index: 5;
-    }
-
-    .interactive {
-      pointer-events: auto;
-    }
-
-    /* Left Drawer - Pumpkin Staging Pile */
-    .pumpkin-pile-panel {
-      position: absolute;
-      left: 20px;
-      top: 80px;
-      bottom: 20px;
-      width: 220px;
-      background: var(--card-bg);
-      backdrop-filter: blur(12px);
-      border-radius: 16px;
-      border: 1px solid var(--border-color);
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      overflow-y: auto;
-    }
-
-    .panel-title {
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #94a3b8;
-      font-weight: 700;
-      text-align: center;
-    }
-
-    .pumpkin-list {
-      display: flex;
-      flex-direction: column;
       gap: 10px;
     }
 
-    .pumpkin-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 2px solid transparent;
-      border-radius: 12px;
-      padding: 10px;
-      cursor: pointer;
+    .badge-toyota {
+      background: #dc2626;
+      color: white;
+      font-size: 0.8rem;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 700;
+    }
+
+    .stats-bar {
+      display: flex;
+      gap: 16px;
+    }
+
+    .stat-pill {
+      background: #fef3c7;
+      border: 2px solid #f59e0b;
+      padding: 6px 16px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #78350f;
       display: flex;
       align-items: center;
+      gap: 6px;
+    }
+
+    .stat-value {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.2rem;
+      color: #d97706;
+    }
+
+    /* Main Play Area */
+    #game-stage {
+      flex: 1;
+      display: flex;
       justify-content: space-between;
-      transition: all 0.2s ease;
+      align-items: center;
+      padding: 20px 40px;
+      position: relative;
+    }
+
+    /* Cartoon Sequoia Rear View */
+    .sequoia-container {
+      position: relative;
+      width: 580px;
+      height: 480px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    /* Sequoia Body Graphic (SVG) */
+    .sequoia-svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 15px 25px rgba(0,0,0,0.3));
+    }
+
+    /* Sequoia Trunk Opening Zone */
+    #trunk-drop-zone {
+      position: absolute;
+      top: 135px;
+      left: 110px;
+      width: 360px;
+      height: 260px;
+      background: #1e1e1e;
+      border-radius: 16px 16px 4px 4px;
+      border: 4px dashed #f59e0b;
+      box-shadow: inset 0 10px 30px rgba(0,0,0,0.8);
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-template-rows: repeat(4, 1fr);
+      gap: 4px;
+      padding: 8px;
+      overflow: hidden;
+    }
+
+    /* Trunk Grid Cells for placement */
+    .grid-cell {
+      border: 1px rgba(255,255,255,0.08) solid;
+      border-radius: 6px;
+      transition: background 0.15s ease;
+      cursor: pointer;
+    }
+
+    .grid-cell:hover {
+      background: rgba(245, 158, 11, 0.25);
+    }
+
+    /* Animated Rear Hatch Door */
+    #sequoia-hatch {
+      position: absolute;
+      top: 125px;
+      left: 105px;
+      width: 370px;
+      height: 275px;
+      background: linear-gradient(180deg, #dc2626 0%, #b91c1c 85%, #7f1d1d 100%);
+      border-radius: 20px 20px 8px 8px;
+      border: 4px solid #991b1b;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+      transform-origin: top center;
+      transform: scaleY(0); /* Closed when scaleY(1) */
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+    }
+
+    #sequoia-hatch.closed {
+      transform: scaleY(1);
+    }
+
+    .hatch-window {
+      width: 80%;
+      height: 90px;
+      background: #38bdf8;
+      border: 4px solid #1e293b;
+      border-radius: 12px;
+      opacity: 0.85;
+    }
+
+    .hatch-badge {
+      background: #ffffff;
+      padding: 4px 16px;
+      border-radius: 20px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      color: #dc2626;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    /* Right Side: Pumpkin Patch Pile */
+    .pile-container {
+      width: 380px;
+      background: var(--card-bg);
+      border-radius: 24px;
+      border: 4px solid #fef08a;
+      padding: 20px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .pile-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.3rem;
+      color: #9a3412;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .pumpkin-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      max-height: 320px;
+      overflow-y: auto;
+      padding: 4px;
+    }
+
+    .pumpkin-card {
+      background: #fef3c7;
+      border: 3px solid #fde047;
+      border-radius: 16px;
+      padding: 12px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
     }
 
     .pumpkin-card:hover {
-      background: rgba(255, 255, 255, 0.1);
-      transform: translateY(-2px);
+      transform: translateY(-4px) scale(1.03);
+      border-color: #f59e0b;
     }
 
     .pumpkin-card.selected {
-      border-color: var(--accent-orange);
-      background: rgba(242, 101, 34, 0.15);
-      box-shadow: 0 0 12px rgba(242, 101, 34, 0.4);
+      background: #ffedd5;
+      border-color: #ea580c;
+      box-shadow: 0 0 0 4px rgba(234, 88, 12, 0.3);
     }
 
     .pumpkin-card.placed {
@@ -184,940 +258,540 @@
       filter: grayscale(0.8);
     }
 
-    .pumpkin-preview {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
+    .pumpkin-svg-wrap {
+      width: 70px;
+      height: 70px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.5rem;
     }
 
-    .pumpkin-info {
-      flex: 1;
-      margin-left: 10px;
-    }
-
-    .pumpkin-name {
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
-
-    .pumpkin-pts {
-      font-size: 0.75rem;
-      color: var(--accent-gold);
-    }
-
-    /* Rotation Control Panel */
-    .rotation-controls {
-      position: absolute;
-      bottom: 25px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--card-bg);
-      backdrop-filter: blur(12px);
-      border-radius: 20px;
-      border: 1px solid var(--border-color);
-      padding: 12px 24px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-
-    .rot-group {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .rot-btn {
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
-      border: 1px solid var(--border-color);
-      padding: 8px 14px;
-      border-radius: 8px;
+    .pumpkin-label {
       font-weight: 700;
       font-size: 0.85rem;
+      color: #78350f;
+      margin-top: 6px;
+    }
+
+    /* Rotation & Actions Panel */
+    .controls-panel {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .btn-rotate {
+      background: #f59e0b;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 6px;
-      transition: all 0.15s ease;
+      box-shadow: 0 4px 10px rgba(245, 158, 11, 0.4);
+      transition: transform 0.15s ease;
     }
 
-    .rot-btn:hover {
-      background: var(--accent-orange);
-      border-color: var(--accent-orange);
+    .btn-rotate:hover {
       transform: scale(1.05);
+      background: #d97706;
     }
 
-    .rot-btn:active {
-      transform: scale(0.95);
-    }
-
-    /* Action Buttons (Right) */
-    .action-panel {
+    .action-bar {
       position: absolute;
-      right: 20px;
-      bottom: 25px;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
       display: flex;
-      flex-direction: column;
-      gap: 12px;
+      gap: 16px;
+      z-index: 15;
     }
 
-    .btn-action {
+    .btn-main {
       padding: 14px 28px;
-      border-radius: 12px;
-      border: none;
-      font-weight: 800;
-      font-size: 1rem;
+      border-radius: 50px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.2rem;
+      border: 3px solid white;
       cursor: pointer;
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 8px;
-      letter-spacing: 0.5px;
+      gap: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
       transition: all 0.2s ease;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
     }
 
     .btn-close-hatch {
-      background: linear-gradient(135deg, #10b981, #059669);
+      background: linear-gradient(135deg, #22c55e, #15803d);
       color: white;
     }
 
     .btn-close-hatch:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 25px rgba(16, 185, 129, 0.4);
+      transform: scale(1.05) translateY(-2px);
     }
 
     .btn-retry {
-      background: rgba(239, 68, 68, 0.2);
-      border: 1px solid rgba(239, 68, 68, 0.5);
-      color: #fca5a5;
+      background: linear-gradient(135deg, #ef4444, #b91c1c);
+      color: white;
     }
 
     .btn-retry:hover {
-      background: rgba(239, 68, 68, 0.4);
-      color: white;
+      transform: scale(1.05) translateY(-2px);
     }
 
-    /* Instruction banner */
-    .instruction-banner {
+    /* Floating Placed Pumpkin Graphic in Trunk */
+    .placed-pumpkin {
       position: absolute;
-      top: 80px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.65);
-      backdrop-filter: blur(8px);
-      padding: 10px 24px;
-      border-radius: 30px;
-      border: 1px solid var(--border-color);
-      font-size: 0.9rem;
-      color: #e2e8f0;
-      text-align: center;
+      transition: transform 0.2s ease;
+      z-index: 5;
       pointer-events: none;
-      animation: pulse 2s infinite ease-in-out;
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 0.9; transform: translateX(-50%) scale(1); }
-      50% { opacity: 1; transform: translateX(-50%) scale(1.02); }
-    }
-
-    /* Modal Overlay for Game Over / Level Clear */
-    .modal-backdrop {
+    /* Modal Overlay */
+    .modal {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(10, 14, 18, 0.85);
-      backdrop-filter: blur(10px);
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: center;
       z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
+      opacity: 0; pointer-events: none;
       transition: opacity 0.3s ease;
     }
 
-    .modal-backdrop.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    .modal.active { opacity: 1; pointer-events: auto; }
 
-    .modal-card {
-      background: #1e293b;
-      border: 1px solid var(--border-color);
-      border-radius: 24px;
-      padding: 36px 48px;
+    .modal-content {
+      background: #fff;
+      border-radius: 30px;
+      padding: 36px;
       text-align: center;
-      max-width: 480px;
+      max-width: 440px;
       width: 90%;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-      transform: scale(0.9);
-      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    .modal-backdrop.active .modal-card {
-      transform: scale(1);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+      border: 6px solid #f59e0b;
     }
 
     .modal-title {
-      font-size: 2rem;
-      font-weight: 900;
-      color: var(--accent-gold);
+      font-family: 'Fredoka One', cursive;
+      font-size: 2.2rem;
+      color: #ea580c;
       margin-bottom: 12px;
     }
 
-    .modal-desc {
-      font-size: 1rem;
-      color: #94a3b8;
-      margin-bottom: 24px;
-      line-height: 1.5;
-    }
-
     .modal-btn {
-      background: linear-gradient(135deg, var(--accent-orange), #d97706);
+      background: #ea580c;
       color: white;
       border: none;
-      padding: 14px 32px;
-      border-radius: 12px;
-      font-weight: 800;
-      font-size: 1.05rem;
+      padding: 14px 36px;
+      border-radius: 30px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.2rem;
+      margin-top: 20px;
       cursor: pointer;
-      transition: transform 0.2s ease;
+      box-shadow: 0 8px 20px rgba(234, 88, 12, 0.4);
     }
 
-    .modal-btn:hover {
-      transform: scale(1.05);
-    }
-
-    /* Toast notification */
+    /* Toast */
     #toast {
       position: absolute;
-      top: 140px;
-      left: 50%;
+      top: 80px; left: 50%;
       transform: translateX(-50%) translateY(-20px);
-      background: #ef4444;
+      background: #dc2626;
       color: white;
-      padding: 10px 20px;
-      border-radius: 10px;
+      padding: 12px 24px;
+      border-radius: 30px;
       font-weight: 700;
-      font-size: 0.9rem;
+      font-family: 'Fredoka One', cursive;
       opacity: 0;
       transition: all 0.3s ease;
-      pointer-events: none;
       z-index: 50;
-      box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
+      box-shadow: 0 10px 25px rgba(220, 38, 38, 0.4);
     }
 
     #toast.show {
       opacity: 1;
       transform: translateX(-50%) translateY(0);
     }
-
-    @media (max-width: 768px) {
-      .pumpkin-pile-panel {
-        width: 100%;
-        height: 130px;
-        top: auto;
-        bottom: 100px;
-        left: 0;
-        right: 0;
-        flex-direction: row;
-        border-radius: 16px 16px 0 0;
-      }
-      .rotation-controls {
-        bottom: 12px;
-        padding: 8px 12px;
-      }
-      .action-panel {
-        right: 12px;
-        bottom: 12px;
-      }
-    }
   </style>
-  <!-- Three.js CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
 
   <header>
-    <div class="brand">
-      <span class="badge">Toyota</span> Sequoia Pumpkin Challenge
+    <div class="logo">
+      <span class="badge-toyota">TOYOTA</span> Sequoia Pumpkin Pack 🎃
     </div>
-    <div class="game-stats">
-      <div class="stat-box">
-        Level: <span id="stat-level" class="stat-value">1</span>
-      </div>
-      <div class="stat-box">
-        Score: <span id="stat-score" class="stat-value">0</span>
-      </div>
-      <div class="stat-box">
-        Retries Left: <span id="stat-retries" class="stat-value">3</span>
-      </div>
+    <div class="stats-bar">
+      <div class="stat-pill">Level: <span id="stat-level" class="stat-value">1</span></div>
+      <div class="stat-pill">Score: <span id="stat-score" class="stat-value">0</span></div>
+      <div class="stat-pill">Retries Left: <span id="stat-retries" class="stat-value">3</span></div>
     </div>
   </header>
 
-  <div id="game-container">
-    <div id="canvas-container"></div>
+  <div id="game-stage">
 
-    <div class="ui-overlay">
-      <div class="instruction-banner" id="instruction">
-        Pick a pumpkin from the pile, rotate it along X/Y/Z, then click in the Sequoia trunk to place it!
-      </div>
+    <!-- Cartoon Toyota Sequoia (Rear View) -->
+    <div class="sequoia-container">
+      <svg class="sequoia-svg" viewBox="0 0 600 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Sequoia Outer Roof & Body -->
+        <path d="M100 130 C100 80, 140 60, 300 60 C460 60, 500 80, 500 130 L530 420 C530 450, 510 460, 480 460 L120 460 C90 460, 70 450, 70 420 Z" fill="#dc2626" stroke="#991b1b" stroke-width="8"/>
+        <!-- Roof Rack -->
+        <rect x="160" y="45" width="280" height="15" rx="6" fill="#1e293b"/>
+        <!-- Taillights -->
+        <rect x="75" y="200" width="35" height="110" rx="10" fill="#ef4444" stroke="#7f1d1d" stroke-width="4"/>
+        <rect x="490" y="200" width="35" height="110" rx="10" fill="#ef4444" stroke="#7f1d1d" stroke-width="4"/>
+        <!-- Rear Bumper & Hitch -->
+        <rect x="90" y="420" width="420" height="40" rx="10" fill="#334155" stroke="#0f172a" stroke-width="4"/>
+        <!-- Toyota Badge -->
+        <ellipse cx="300" cy="95" rx="22" ry="14" fill="#e2e8f0" stroke="#475569" stroke-width="3"/>
+        <text x="300" y="99" font-family="Fredoka One" font-size="10" fill="#dc2626" text-anchor="middle">TOYOTA</text>
+        <text x="300" y="445" font-family="Fredoka One" font-size="16" fill="#ffffff" text-anchor="middle">S E Q U O I A</text>
+      </svg>
 
-      <!-- Pumpkin Selection Pile Panel -->
-      <div class="pumpkin-pile-panel interactive">
-        <div class="panel-title">Available Pile</div>
-        <div class="pumpkin-list" id="pumpkin-list">
-          <!-- Dynamically populated -->
-        </div>
-      </div>
+      <!-- Sequoia Trunk Opening -->
+      <div id="trunk-drop-zone"></div>
 
-      <!-- Rotation Controls -->
-      <div class="rotation-controls interactive">
-        <span style="font-size:0.8rem; font-weight:700; color:#94a3b8; text-transform:uppercase;">Rotate:</span>
-        <div class="rot-group">
-          <button class="rot-btn" onclick="rotateSelected('x')">X ↻</button>
-          <button class="rot-btn" onclick="rotateSelected('y')">Y ↻</button>
-          <button class="rot-btn" onclick="rotateSelected('z')">Z ↻</button>
-        </div>
-      </div>
-
-      <!-- Action Panel -->
-      <div class="action-panel interactive">
-        <button class="btn-action btn-retry" onclick="retryLevel()">
-          🔄 Empty Trunk (<span id="btn-retry-count">3</span> left)
-        </button>
-        <button class="btn-action btn-close-hatch" onclick="testCloseHatch()">
-          🚗 Close Sequoia Hatch!
-        </button>
+      <!-- Cartoon Rear Hatch Door -->
+      <div id="sequoia-hatch">
+        <div class="hatch-window"></div>
+        <div class="hatch-badge">TOYOTA SEQUOIA</div>
       </div>
     </div>
 
-    <div id="toast">Hatch blocked! Some pumpkins extend outside the tailgate.</div>
+    <!-- Right Side: Pumpkin Pile -->
+    <div class="pile-container">
+      <div class="pile-title">🌾 Harvest Pumpkin Pile</div>
+      <div class="pumpkin-grid" id="pumpkin-grid"></div>
+
+      <div class="controls-panel">
+        <button class="btn-rotate" onclick="rotateSelectedPumpkin()"> rotate ⟳</button>
+        <span style="font-weight:700; font-size:0.85rem; color:#78350f;" id="rot-label">Angle: 0°</span>
+      </div>
+    </div>
+
   </div>
 
-  <!-- Modal Dialog -->
-  <div class="modal-backdrop" id="modal-backdrop">
-    <div class="modal-card">
+  <!-- Bottom Action Buttons -->
+  <div class="action-bar">
+    <button class="btn-main btn-retry" onclick="retryRound()">
+      🔄 Empty Trunk (<span id="btn-retry-count">3</span>)
+    </button>
+    <button class="btn-main btn-close-hatch" onclick="closeHatchTest()">
+      🚗 Close Sequoia Hatch!
+    </button>
+  </div>
+
+  <div id="toast">Hatch blocked! Rearrange your pumpkins!</div>
+
+  <div class="modal" id="modal">
+    <div class="modal-content">
       <div class="modal-title" id="modal-title">Level Cleared! 🎉</div>
-      <div class="modal-desc" id="modal-desc">
-        Great packing! All pumpkins fit perfectly inside the Sequoia cargo trunk and the rear hatch shut clean!
-      </div>
-      <button class="modal-btn" id="modal-btn" onclick="handleModalClick()">Next Level ➔</button>
+      <p id="modal-desc" style="color:#64748b; font-size:1.05rem; line-height:1.5;">Great packing! All pumpkins fit into the Sequoia!</p>
+      <button class="modal-btn" onclick="nextLevel()">Next Level ➔</button>
     </div>
   </div>
 
   <script>
-    /* ==================== GAME CONFIG & STATE ==================== */
-    let scene, camera, renderer;
-    let trunkBox, hatchDoor, hatchGroup;
+    let level = 1;
+    let score = 0;
+    let retries = 3;
+    let selectedIndex = -1;
+    let currentRotation = 0; // 0, 90, 180, 270
+
+    // Grid: 6 columns x 4 rows
+    const COLS = 6;
+    const ROWS = 4;
+    let gridState = Array(ROWS).fill(null).map(() => Array(COLS).fill(false));
+
     let availablePumpkins = [];
     let placedPumpkins = [];
-    let selectedPumpkinIndex = -1;
-    let previewMesh = null;
 
-    let gameState = {
-      level: 1,
-      score: 0,
-      retries: 3,
-      hatchClosed: false,
-      isAnimatingHatch: false
-    };
-
-    // Trunk Dimensions (Virtual Sequoia Cargo Area)
-    const TRUNK_BOUNDS = {
-      width: 4.8,   // X (-2.4 to 2.4)
-      height: 3.2,  // Y (0 to 3.2)
-      depth: 4.0    // Z (-2.0 to 2.0)
-    };
-
-    /* Web Audio Synthesizer for FX */
+    // Web Audio Synthesizer
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    function playSound(type) {
+    function playSfx(type) {
       try {
         if (audioCtx.state === 'suspended') audioCtx.resume();
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-
+        osc.connect(gain); gain.connect(audioCtx.destination);
         const now = audioCtx.currentTime;
-        if (type === 'select') {
-          osc.frequency.setValueAtTime(440, now);
-          osc.frequency.exponentialRampToValueAtTime(660, now + 0.1);
-          gain.gain.setValueAtTime(0.15, now);
-          gain.gain.linearRampToValueAtTime(0.01, now + 0.1);
-          osc.start(now);
-          osc.stop(now + 0.1);
-        } else if (type === 'place') {
+
+        if (type === 'pop') {
+          osc.frequency.setValueAtTime(300, now);
+          osc.frequency.exponentialRampToValueAtTime(600, now + 0.1);
+          gain.gain.setValueAtTime(0.2, now); gain.gain.linearRampToValueAtTime(0.01, now + 0.1);
+          osc.start(now); osc.stop(now + 0.1);
+        } else if (type === 'placed') {
           osc.type = 'triangle';
-          osc.frequency.setValueAtTime(220, now);
-          osc.frequency.exponentialRampToValueAtTime(110, now + 0.15);
-          gain.gain.setValueAtTime(0.3, now);
-          gain.gain.linearRampToValueAtTime(0.01, now + 0.15);
-          osc.start(now);
-          osc.stop(now + 0.15);
-        } else if (type === 'rotate') {
-          osc.frequency.setValueAtTime(520, now);
-          osc.frequency.exponentialRampToValueAtTime(380, now + 0.08);
-          gain.gain.setValueAtTime(0.1, now);
-          gain.gain.linearRampToValueAtTime(0.01, now + 0.08);
-          osc.start(now);
-          osc.stop(now + 0.08);
+          osc.frequency.setValueAtTime(180, now);
+          osc.frequency.exponentialRampToValueAtTime(90, now + 0.15);
+          gain.gain.setValueAtTime(0.3, now); gain.gain.linearRampToValueAtTime(0.01, now + 0.15);
+          osc.start(now); osc.stop(now + 0.15);
         } else if (type === 'win') {
           osc.type = 'sine';
-          osc.frequency.setValueAtTime(523.25, now); // C5
-          osc.frequency.setValueAtTime(659.25, now + 0.1); // E5
-          osc.frequency.setValueAtTime(783.99, now + 0.2); // G5
-          osc.frequency.setValueAtTime(1046.50, now + 0.3); // C6
-          gain.gain.setValueAtTime(0.2, now);
-          gain.gain.linearRampToValueAtTime(0.01, now + 0.6);
-          osc.start(now);
-          osc.stop(now + 0.6);
+          osc.frequency.setValueAtTime(523, now);
+          osc.frequency.setValueAtTime(659, now + 0.1);
+          osc.frequency.setValueAtTime(783, now + 0.2);
+          gain.gain.setValueAtTime(0.25, now); gain.gain.linearRampToValueAtTime(0.01, now + 0.4);
+          osc.start(now); osc.stop(now + 0.4);
         } else if (type === 'fail') {
           osc.type = 'sawtooth';
-          osc.frequency.setValueAtTime(200, now);
-          osc.frequency.linearRampToValueAtTime(90, now + 0.3);
-          gain.gain.setValueAtTime(0.2, now);
-          gain.gain.linearRampToValueAtTime(0.01, now + 0.3);
-          osc.start(now);
-          osc.stop(now + 0.3);
+          osc.frequency.setValueAtTime(180, now);
+          osc.frequency.linearRampToValueAtTime(80, now + 0.25);
+          gain.gain.setValueAtTime(0.2, now); gain.gain.linearRampToValueAtTime(0.01, now + 0.25);
+          osc.start(now); osc.stop(now + 0.25);
         }
       } catch(e){}
     }
 
-    /* ==================== THREE.JS SETUP ==================== */
-    function init3D() {
-      const container = document.getElementById('canvas-container');
-      scene = new THREE.Scene();
-      scene.background = new THREE.Color(0x121619);
+    // Initialize Trunk Grid UI
+    function initGridUI() {
+      const dropZone = document.getElementById('trunk-drop-zone');
+      dropZone.innerHTML = '';
+      gridState = Array(ROWS).fill(null).map(() => Array(COLS).fill(false));
 
-      camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
-      // Perspective positioned at Sequoia rear tailgate view
-      camera.position.set(0, 3.8, 6.5);
-      camera.lookAt(0, 1.2, -0.5);
-
-      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      renderer.setSize(container.clientWidth, container.clientHeight);
-      renderer.shadowMap.enabled = true;
-      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-      container.appendChild(renderer.domElement);
-
-      // Lighting
-      const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-      scene.add(ambientLight);
-
-      const dirLight = new THREE.DirectionalLight(0xfff5ea, 0.9);
-      dirLight.position.set(4, 8, 5);
-      dirLight.castShadow = true;
-      dirLight.shadow.mapSize.width = 1024;
-      dirLight.shadow.mapSize.height = 1024;
-      scene.add(dirLight);
-
-      const cabinLight = new THREE.PointLight(0xffaa44, 0.8, 8);
-      cabinLight.position.set(0, 2.5, -2);
-      scene.add(cabinLight);
-
-      // Build Sequoia Interior & Trunk
-      buildSequoiaTrunk();
-
-      // Window Resize Listener
-      window.addEventListener('resize', onWindowResize);
-
-      // Raycaster for Trunk Placement
-      renderer.domElement.addEventListener('pointerdown', onCanvasClick);
-
-      // Animation Loop
-      animate();
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          const cell = document.createElement('div');
+          cell.className = 'grid-cell';
+          cell.dataset.row = r;
+          cell.dataset.col = c;
+          cell.onclick = () => onGridCellClick(r, c);
+          dropZone.appendChild(cell);
+        }
+      }
     }
 
-    function buildSequoiaTrunk() {
-      const trunkGroup = new THREE.Group();
-
-      // Trunk Interior Walls / Carpet Material
-      const carpetMat = new THREE.MeshStandardMaterial({ color: 0x242b32, roughness: 0.9 });
-      const exteriorMat = new THREE.MeshStandardMaterial({ color: 0x11161a, roughness: 0.4, metalness: 0.8 });
-
-      // Floor
-      const floorGeo = new THREE.BoxGeometry(TRUNK_BOUNDS.width, 0.1, TRUNK_BOUNDS.depth);
-      const floor = new THREE.Mesh(floorGeo, carpetMat);
-      floor.position.set(0, -0.05, 0);
-      floor.receiveShadow = true;
-      trunkGroup.add(floor);
-
-      // Floor Grid Overlay for packing guidance
-      const grid = new THREE.GridHelper(TRUNK_BOUNDS.width, 8, 0xf26522, 0x334155);
-      grid.position.set(0, 0.01, 0);
-      trunkGroup.add(grid);
-
-      // Back Wall (Behind second row seats)
-      const backWallGeo = new THREE.BoxGeometry(TRUNK_BOUNDS.width, TRUNK_BOUNDS.height, 0.1);
-      const backWall = new THREE.Mesh(backWallGeo, carpetMat);
-      backWall.position.set(0, TRUNK_BOUNDS.height / 2, -TRUNK_BOUNDS.depth / 2);
-      trunkGroup.add(backWall);
-
-      // Left Wall
-      const sideWallGeo = new THREE.BoxGeometry(0.1, TRUNK_BOUNDS.height, TRUNK_BOUNDS.depth);
-      const leftWall = new THREE.Mesh(sideWallGeo, carpetMat);
-      leftWall.position.set(-TRUNK_BOUNDS.width / 2, TRUNK_BOUNDS.height / 2, 0);
-      trunkGroup.add(leftWall);
-
-      // Right Wall
-      const rightWall = new THREE.Mesh(sideWallGeo, carpetMat);
-      rightWall.position.set(TRUNK_BOUNDS.width / 2, TRUNK_BOUNDS.height / 2, 0);
-      trunkGroup.add(rightWall);
-
-      // Roof / Ceiling
-      const roofGeo = new THREE.BoxGeometry(TRUNK_BOUNDS.width, 0.1, TRUNK_BOUNDS.depth);
-      const roof = new THREE.Mesh(roofGeo, carpetMat);
-      roof.position.set(0, TRUNK_BOUNDS.height, 0);
-      trunkGroup.add(roof);
-
-      // Bounding Box outline (Glass/wireframe hint)
-      const bboxGeo = new THREE.BoxGeometry(TRUNK_BOUNDS.width, TRUNK_BOUNDS.height, TRUNK_BOUNDS.depth);
-      const bboxEdges = new THREE.EdgesGeometry(bboxGeo);
-      const bboxLine = new THREE.LineSegments(bboxEdges, new THREE.LineBasicMaterial({ color: 0x38bdf8, opacity: 0.25, transparent: true }));
-      bboxLine.position.set(0, TRUNK_BOUNDS.height / 2, 0);
-      trunkGroup.add(bboxLine);
-
-      // Sequoia Rear Hatch Pivot Assembly
-      hatchGroup = new THREE.Group();
-      hatchGroup.position.set(0, TRUNK_BOUNDS.height, TRUNK_BOUNDS.depth / 2); // Pivot top hinge
-
-      const hatchGeo = new THREE.BoxGeometry(TRUNK_BOUNDS.width + 0.2, TRUNK_BOUNDS.height, 0.15);
-      hatchDoor = new THREE.Mesh(hatchGeo, exteriorMat);
-      hatchDoor.position.set(0, -TRUNK_BOUNDS.height / 2, 0);
-
-      // Hatch Rear Window (Stylized Toyota Logo badge on hatch)
-      const badgeGeo = new THREE.CylinderGeometry(0.3, 0.3, 0.05, 16);
-      const badgeMat = new THREE.MeshStandardMaterial({ color: 0xeb0a1e, metalness: 0.9, roughness: 0.2 });
-      const badge = new THREE.Mesh(badgeGeo, badgeMat);
-      badge.rotation.x = Math.PI / 2;
-      badge.position.set(0, -TRUNK_BOUNDS.height / 2 + 0.3, 0.1);
-      hatchDoor.add(badge);
-
-      hatchGroup.add(hatchDoor);
-      // Start with hatch open (rotated up 100 degrees)
-      hatchGroup.rotation.x = -Math.PI * 0.55;
-      scene.add(hatchGroup);
-
-      scene.add(trunkGroup);
-    }
-
-    /* ==================== PARAMETRIC PUMPKIN GENERATOR ==================== */
-    function createPumpkinMesh(spec) {
-      const group = new THREE.Group();
-
-      // Pumpkin Material with realistic orange/autumn colors
-      const mat = new THREE.MeshStandardMaterial({
-        color: spec.color,
-        roughness: 0.5,
-        metalness: 0.1
-      });
-
-      // Segmented Pumpkin Body (Lobe geometry)
-      const lobes = spec.lobes || 8;
-      const radiusX = spec.scaleX;
-      const radiusY = spec.scaleY;
-      const radiusZ = spec.scaleZ;
-
-      for (let i = 0; i < lobes; i++) {
-        const angle = (i / lobes) * Math.PI * 2;
-        const lobeGeo = new THREE.SphereGeometry(1, 16, 16);
-        lobeGeo.scale(radiusX * 0.6, radiusY, radiusZ * 0.6);
-
-        const lobe = new THREE.Mesh(lobeGeo, mat);
-        lobe.castShadow = true;
-        lobe.receiveShadow = true;
-        lobe.position.set(
-          Math.cos(angle) * (radiusX * 0.35),
-          0,
-          Math.sin(angle) * (radiusZ * 0.35)
-        );
-        group.add(lobe);
+    // Generate SVG Cartoon Pumpkin shapes
+    function getPumpkinSVG(type, color, rotation = 0) {
+      let shape = '';
+      if (type === 'fat') {
+        shape = `<ellipse cx="35" cy="40" rx="30" ry="22" fill="${color}" stroke="#b45309" stroke-width="3"/>
+                 <path d="M 35 18 Q 30 10 25 8" stroke="#15803d" stroke-width="4" fill="none" stroke-linecap="round"/>`;
+      } else if (type === 'tall') {
+        shape = `<ellipse cx="35" cy="35" rx="20" ry="28" fill="${color}" stroke="#b45309" stroke-width="3"/>
+                 <path d="M 35 8 Q 38 2 42 0" stroke="#15803d" stroke-width="4" fill="none" stroke-linecap="round"/>`;
+      } else if (type === 'mini') {
+        shape = `<ellipse cx="35" cy="40" rx="16" ry="14" fill="${color}" stroke="#b45309" stroke-width="3"/>
+                 <path d="M 35 26 Q 32 20 28 18" stroke="#15803d" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+      } else { // round/lumpy
+        shape = `<ellipse cx="35" cy="38" rx="26" ry="24" fill="${color}" stroke="#b45309" stroke-width="3"/>
+                 <path d="M 35 14 Q 32 8 28 6" stroke="#15803d" stroke-width="4" fill="none" stroke-linecap="round"/>`;
       }
 
-      // Stem
-      const stemGeo = new THREE.CylinderGeometry(0.08, 0.14, radiusY * 0.7, 8);
-      const stemMat = new THREE.MeshStandardMaterial({ color: 0x3f6212, roughness: 0.9 });
-      const stem = new THREE.Mesh(stemGeo, stemMat);
-      stem.position.set(0, radiusY + (radiusY * 0.25), 0);
-      stem.rotation.z = (Math.random() - 0.5) * 0.3;
-      group.add(stem);
-
-      group.userData = { spec: spec };
-      return group;
+      return `<svg width="70" height="70" viewBox="0 0 70 70" style="transform: rotate(${rotation}deg); transition: transform 0.2s ease;">
+                ${shape}
+              </svg>`;
     }
 
-    /* ==================== LEVEL GENERATOR ==================== */
-    function generateLevelPumpkins(level) {
+    // Generate Level Pumpkins
+    function generateLevelPumpkins() {
       availablePumpkins = [];
-      const count = 4 + Math.min(level * 2, 8); // Levels add more/harder pumpkins
-
-      const colors = [
-        0xf97316, // Classic Pumpkin Orange
-        0xeab308, // Golden Yellow
-        0xf26522, // Deep Harvest Orange
-        0xf1f5f9, // Ghost Pumpkin White
-        0x65a30d  // Green Heirloom
-      ];
+      const count = 4 + Math.min(level * 2, 8);
+      const types = ['fat', 'tall', 'mini', 'round'];
+      const colors = ['#f97316', '#fbbf24', '#ea580c', '#fef08a', '#84cc16'];
 
       for (let i = 0; i < count; i++) {
-        // Higher levels introduce irregular, tall, flat, or giant pumpkins
-        const isOddShape = level > 1 && Math.random() > 0.4;
+        const t = types[Math.floor(Math.random() * types.length)];
+        const c = colors[Math.floor(Math.random() * colors.length)];
 
-        const scaleX = 0.5 + Math.random() * (0.4 + level * 0.1);
-        const scaleY = isOddShape ? (0.4 + Math.random() * 0.8) : (0.5 + Math.random() * 0.3);
-        const scaleZ = 0.5 + Math.random() * (0.4 + level * 0.1);
-
-        const color = colors[Math.floor(Math.random() * colors.length)];
-        const pts = Math.round((scaleX * scaleY * scaleZ) * 200);
+        // Grid span dimensions (w, h in cells)
+        let w = t === 'fat' ? 2 : (t === 'mini' ? 1 : 1);
+        let h = t === 'tall' ? 2 : (t === 'mini' ? 1 : 1);
 
         availablePumpkins.push({
           id: i,
-          name: `Pumpkin #${i+1}`,
-          color: color,
-          scaleX: scaleX,
-          scaleY: scaleY,
-          scaleZ: scaleZ,
-          lobes: 7 + Math.floor(Math.random() * 5),
-          rotX: 0,
-          rotY: 0,
-          rotZ: 0,
-          points: pts,
+          type: t,
+          color: c,
+          widthCells: w,
+          heightCells: h,
+          pts: (w * h) * 100,
           placed: false
         });
       }
 
-      renderPumpkinPileUI();
+      renderPileUI();
     }
 
-    function renderPumpkinPileUI() {
-      const container = document.getElementById('pumpkin-list');
-      container.innerHTML = '';
+    function renderPileUI() {
+      const grid = document.getElementById('pumpkin-grid');
+      grid.innerHTML = '';
 
       availablePumpkins.forEach((p, idx) => {
         const card = document.createElement('div');
-        card.className = `pumpkin-card ${p.placed ? 'placed' : ''} ${selectedPumpkinIndex === idx ? 'selected' : ''}`;
+        card.className = `pumpkin-card ${p.placed ? 'placed' : ''} ${selectedIndex === idx ? 'selected' : ''}`;
         card.onclick = () => selectPumpkin(idx);
 
-        const colorHex = '#' + p.color.toString(16).padStart(6, '0');
-
         card.innerHTML = `
-          <div class="pumpkin-preview" style="background:${colorHex}22; color:${colorHex};">
-            🎃
+          <div class="pumpkin-svg-wrap">
+            ${getPumpkinSVG(p.type, p.color, selectedIndex === idx ? currentRotation : 0)}
           </div>
-          <div class="pumpkin-info">
-            <div class="pumpkin-name">${p.name}</div>
-            <div class="pumpkin-pts">+${p.points} pts</div>
-          </div>
+          <div class="pumpkin-label">+${p.pts} pts</div>
         `;
-
-        container.appendChild(card);
+        grid.appendChild(card);
       });
     }
 
-    /* ==================== GAMEPLAY INTERACTIONS ==================== */
     function selectPumpkin(idx) {
       if (availablePumpkins[idx].placed) return;
-
-      selectedPumpkinIndex = idx;
-      playSound('select');
-      renderPumpkinPileUI();
-      updatePreviewMesh();
+      selectedIndex = idx;
+      playSfx('pop');
+      renderPileUI();
     }
 
-    function rotateSelected(axis) {
-      if (selectedPumpkinIndex === -1) return;
-      const p = availablePumpkins[selectedPumpkinIndex];
-
-      if (axis === 'x') p.rotX = (p.rotX + Math.PI / 2) % (Math.PI * 2);
-      if (axis === 'y') p.rotY = (p.rotY + Math.PI / 2) % (Math.PI * 2);
-      if (axis === 'z') p.rotZ = (p.rotZ + Math.PI / 2) % (Math.PI * 2);
-
-      playSound('rotate');
-
-      if (previewMesh) {
-        previewMesh.rotation.set(p.rotX, p.rotY, p.rotZ);
-      }
+    function rotateSelectedPumpkin() {
+      if (selectedIndex === -1) return;
+      currentRotation = (currentRotation + 90) % 360;
+      document.getElementById('rot-label').innerText = `Angle: ${currentRotation}°`;
+      playSfx('pop');
+      renderPileUI();
     }
 
-    function updatePreviewMesh() {
-      if (previewMesh) {
-        scene.remove(previewMesh);
-        previewMesh = null;
+    // Grid placement
+    function onGridCellClick(r, c) {
+      if (selectedIndex === -1) return;
+      const p = availablePumpkins[selectedIndex];
+
+      // Calculate span with rotation
+      let w = p.widthCells;
+      let h = p.heightCells;
+      if (currentRotation === 90 || currentRotation === 270) {
+        let tmp = w; w = h; h = tmp;
       }
 
-      if (selectedPumpkinIndex === -1) return;
-
-      const p = availablePumpkins[selectedPumpkinIndex];
-      previewMesh = createPumpkinMesh(p);
-      previewMesh.rotation.set(p.rotX, p.rotY, p.rotZ);
-
-      // Semi-transparent ghost preview
-      previewMesh.traverse((child) => {
-        if (child.isMesh) {
-          child.material = child.material.clone();
-          child.material.transparent = true;
-          child.material.opacity = 0.6;
-        }
-      });
-
-      // Default staging position inside trunk
-      previewMesh.position.set(0, p.scaleY, 0);
-      scene.add(previewMesh);
-    }
-
-    /* Track pointer movement to position ghost pumpkin inside Sequoia */
-    function onCanvasClick(event) {
-      if (selectedPumpkinIndex === -1 || gameState.isAnimatingHatch) return;
-
-      const raycaster = new THREE.Raycaster();
-      const mouse = new THREE.Vector2();
-
-      const rect = renderer.domElement.getBoundingClientRect();
-      mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-      mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
-      raycaster.setFromCamera(mouse, camera);
-
-      // Plane representing Sequoia floor
-      const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
-      const targetPoint = new THREE.Vector3();
-
-      if (raycaster.ray.intersectPlane(plane, targetPoint)) {
-        // Clamp placement within floor bounds
-        const p = availablePumpkins[selectedPumpkinIndex];
-        const halfW = TRUNK_BOUNDS.width / 2 - p.scaleX * 0.5;
-        const halfD = TRUNK_BOUNDS.depth / 2 - p.scaleZ * 0.5;
-
-        if (Math.abs(targetPoint.x) <= halfW + 0.5 && Math.abs(targetPoint.z) <= halfD + 0.5) {
-          placePumpkinInTrunk(targetPoint.x, targetPoint.z);
-        }
+      // Check if fits inside grid boundaries
+      if (r + h > ROWS || c + w > COLS) {
+        showToast("Pumpkin doesn't fit in that spot!");
+        playSfx('fail');
+        return;
       }
-    }
 
-    function placePumpkinInTrunk(x, z) {
-      const p = availablePumpkins[selectedPumpkinIndex];
-
-      // Create permanent locked pumpkin mesh
-      const placedMesh = createPumpkinMesh(p);
-      placedMesh.rotation.set(p.rotX, p.rotY, p.rotZ);
-
-      // Stack height calculation over existing placed pumpkins
-      let stackY = p.scaleY;
-      placedPumpkins.forEach(other => {
-        const distSq = Math.pow(other.mesh.position.x - x, 2) + Math.pow(other.mesh.position.z - z, 2);
-        if (distSq < 1.2) {
-          const topOther = other.mesh.position.y + other.spec.scaleY;
-          if (topOther > stackY - p.scaleY) {
-            stackY = topOther + p.scaleY;
+      // Check overlap with existing placed pumpkins
+      for (let ri = r; ri < r + h; ri++) {
+        for (let ci = c; ci < c + w; ci++) {
+          if (gridState[ri][ci]) {
+            showToast("Spot already occupied!");
+            playSfx('fail');
+            return;
           }
         }
-      });
+      }
 
-      placedMesh.position.set(x, stackY, z);
-      scene.add(placedMesh);
+      // Fill grid state
+      for (let ri = r; ri < r + h; ri++) {
+        for (let ci = c; ci < c + w; ci++) {
+          gridState[ri][ci] = true;
+        }
+      }
 
-      // Lock in place
+      // Place visual pumpkin in trunk
+      const dropZone = document.getElementById('trunk-drop-zone');
+      const cellW = dropZone.clientWidth / COLS;
+      const cellH = dropZone.clientHeight / ROWS;
+
+      const pEl = document.createElement('div');
+      pEl.className = 'placed-pumpkin';
+      pEl.style.left = `${c * cellW + 4}px`;
+      pEl.style.top = `${r * cellH + 4}px`;
+      pEl.style.width = `${w * cellW - 8}px`;
+      pEl.style.height = `${h * cellH - 8}px`;
+      pEl.innerHTML = getPumpkinSVG(p.type, p.color, currentRotation);
+
+      dropZone.appendChild(pEl);
+
       p.placed = true;
-      placedPumpkins.push({ mesh: placedMesh, spec: p });
+      placedPumpkins.push(pEl);
 
-      // Score
-      gameState.score += p.points;
-      document.getElementById('stat-score').innerText = gameState.score;
+      score += p.pts;
+      document.getElementById('stat-score').innerText = score;
+      playSfx('placed');
 
-      playSound('place');
-
-      // Clear selection
-      if (previewMesh) {
-        scene.remove(previewMesh);
-        previewMesh = null;
-      }
-      selectedPumpkinIndex = -1;
-
-      renderPumpkinPileUI();
+      selectedIndex = -1;
+      currentRotation = 0;
+      document.getElementById('rot-label').innerText = `Angle: 0°`;
+      renderPileUI();
     }
 
-    /* Retry / Empty Trunk */
-    function retryLevel() {
-      if (gameState.retries <= 0) {
-        showToast("No retries left for this round!");
+    function retryRound() {
+      if (retries <= 0) {
+        showToast("No retries left!");
         return;
       }
+      retries--;
+      document.getElementById('stat-retries').innerText = retries;
+      document.getElementById('btn-retry-count').innerText = retries;
 
-      gameState.retries--;
-      document.getElementById('stat-retries').innerText = gameState.retries;
-      document.getElementById('btn-retry-count').innerText = gameState.retries;
-
-      emptyTrunkAndResetPile();
+      emptyTrunk();
+      playSfx('fail');
     }
 
-    function emptyTrunkAndResetPile() {
-      // Remove placed meshes from 3D scene
-      placedPumpkins.forEach(item => scene.remove(item.mesh));
+    function emptyTrunk() {
+      placedPumpkins.forEach(el => el.remove());
       placedPumpkins = [];
-
-      if (previewMesh) {
-        scene.remove(previewMesh);
-        previewMesh = null;
-      }
-
-      selectedPumpkinIndex = -1;
-
-      // Reset pumpkin statuses
+      gridState = Array(ROWS).fill(null).map(() => Array(COLS).fill(false));
       availablePumpkins.forEach(p => p.placed = false);
-      renderPumpkinPileUI();
-
-      playSound('fail');
+      selectedIndex = -1;
+      renderPileUI();
     }
 
-    /* Test Sequoia Rear Hatch Closing */
-    function testCloseHatch() {
-      if (gameState.isAnimatingHatch) return;
-
+    function closeHatchTest() {
       if (placedPumpkins.length === 0) {
-        showToast("Put some pumpkins in the Sequoia trunk first!");
+        showToast("Put some pumpkins in the trunk first!");
         return;
       }
 
-      gameState.isAnimatingHatch = true;
+      const hatch = document.getElementById('sequoia-hatch');
+      hatch.classList.add('closed');
 
-      // Animate hatch closing
-      let startTime = null;
-      const duration = 1200; // ms
+      setTimeout(() => {
+        // Check if all available pumpkins placed
+        const unplaced = availablePumpkins.filter(p => !p.placed);
 
-      function animateHatchClose(timestamp) {
-        if (!startTime) startTime = timestamp;
-        const progress = Math.min((timestamp - startTime) / duration, 1);
-
-        // Rotate from -0.55*PI down to 0
-        hatchGroup.rotation.x = -Math.PI * 0.55 * (1 - progress);
-
-        if (progress < 1) {
-          requestAnimationFrame(animateHatchClose);
+        if (unplaced.length === 0) {
+          playSfx('win');
+          showModal(`Level ${level} Cleared! 🎉`, `Fantastic packing! Every pumpkin fits perfectly in the Sequoia trunk! Total Score: ${score}`);
         } else {
-          // Check collision with hatch door
-          checkHatchFit();
+          // Hatch pops back up
+          playSfx('fail');
+          showToast("Hatch blocked! Not all pumpkins fit!");
+          setTimeout(() => hatch.classList.remove('closed'), 600);
         }
-      }
-
-      requestAnimationFrame(animateHatchClose);
+      }, 700);
     }
 
-    function checkHatchFit() {
-      // Hatch door plane is at Z = TRUNK_BOUNDS.depth / 2 (2.0), Y up to TRUNK_BOUNDS.height (3.2)
-      let fits = true;
-
-      placedPumpkins.forEach(item => {
-        const box = new THREE.Box3().setFromObject(item.mesh);
-
-        // Check if extending past tailgate Z boundary or roof Y height
-        if (box.max.z > (TRUNK_BOUNDS.depth / 2 + 0.1) || box.max.y > TRUNK_BOUNDS.height) {
-          fits = false;
-        }
-      });
-
-      if (fits) {
-        // Level Cleared!
-        playSound('win');
-        setTimeout(() => {
-          showModal(
-            `Level ${gameState.level} Cleared! 🎉`,
-            `Awesome packing! All pumpkins fit inside the Toyota Sequoia and the rear hatch closed tight! Total Score: ${gameState.score}`,
-            "Next Level ➔",
-            nextLevel
-          );
-        }, 500);
-      } else {
-        // Hatch bounces back open!
-        playSound('fail');
-        showToast("Hatch blocked! Some pumpkins extend outside the Sequoia tailgate!");
-
-        // Animate hatch opening back up
-        let startTime = null;
-        function animateHatchOpen(timestamp) {
-          if (!startTime) startTime = timestamp;
-          const progress = Math.min((timestamp - startTime) / 600, 1);
-          hatchGroup.rotation.x = -Math.PI * 0.55 * progress;
-
-          if (progress < 1) {
-            requestAnimationFrame(animateHatchOpen);
-          } else {
-            gameState.isAnimatingHatch = false;
-          }
-        }
-        requestAnimationFrame(animateHatchOpen);
-      }
+    function showModal(title, desc) {
+      document.getElementById('modal-title').innerText = title;
+      document.getElementById('modal-desc').innerText = desc;
+      document.getElementById('modal').classList.add('active');
     }
 
     function nextLevel() {
-      gameState.level++;
-      gameState.isAnimatingHatch = false;
-      document.getElementById('stat-level').innerText = gameState.level;
+      document.getElementById('modal').classList.remove('active');
+      document.getElementById('sequoia-hatch').classList.remove('closed');
 
-      // Reset hatch position
-      hatchGroup.rotation.x = -Math.PI * 0.55;
+      level++;
+      document.getElementById('stat-level').innerText = level;
 
-      // Reset trunk
-      emptyTrunkAndResetPile();
-
-      // Generate tougher pumpkins
-      generateLevelPumpkins(gameState.level);
-    }
-
-    /* Modal Handler */
-    let currentModalCallback = null;
-    function showModal(title, desc, btnText, callback) {
-      document.getElementById('modal-title').innerText = title;
-      document.getElementById('modal-desc').innerText = desc;
-      document.getElementById('modal-btn').innerText = btnText;
-      currentModalCallback = callback;
-      document.getElementById('modal-backdrop').classList.add('active');
-    }
-
-    function handleModalClick() {
-      document.getElementById('modal-backdrop').classList.remove('active');
-      if (currentModalCallback) currentModalCallback();
+      emptyTrunk();
+      generateLevelPumpkins();
     }
 
     function showToast(msg) {
-      const toast = document.getElementById('toast');
-      toast.innerText = msg;
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 3000);
+      const t = document.getElementById('toast');
+      t.innerText = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2500);
     }
 
-    function onWindowResize() {
-      const container = document.getElementById('canvas-container');
-      camera.aspect = container.clientWidth / container.clientHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(container.clientWidth, container.clientHeight);
-    }
-
-    function animate() {
-      requestAnimationFrame(animate);
-
-      // Subtle rotation for preview item
-      if (previewMesh) {
-        previewMesh.position.y = previewMesh.userData.spec.scaleY + Math.sin(Date.now() * 0.004) * 0.05;
-      }
-
-      renderer.render(scene, camera);
-    }
-
-    /* Initialize Game */
     window.onload = () => {
-      init3D();
-      generateLevelPumpkins(gameState.level);
+      initGridUI();
+      generateLevelPumpkins();
     };
   </script>
 </body>
